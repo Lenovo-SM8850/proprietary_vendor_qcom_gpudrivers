@@ -1,0 +1,94 @@
+// SPDX-License-Identifier: Apache-2.0
+
+python_binary_host {
+    name: "build-adreno-driver-apk",
+    main: "build-driver-apk.py",
+    srcs: ["build-driver-apk.py"],
+}
+
+java_genrule {
+    name: "AdrenoA840_891_14_1_apk",
+    tools: [
+        "build-adreno-driver-apk",
+        "aapt2",
+        "zipalign",
+    ],
+    srcs: [
+        "a840/891.14.1/lib64/*.so",
+        "a840/891.14.1/sphal_libraries.txt",
+        ":sdk_public_36_android",
+    ],
+    out: ["AdrenoA840_891_14_1.apk"],
+    cmd: "$(location build-adreno-driver-apk) --aapt2 $(location aapt2) --zipalign $(location zipalign) " +
+        "--android-jar $(location :sdk_public_36_android) --version 891.14.1 --output $(out) " +
+        "$(locations a840/891.14.1/lib64/*.so) $(location a840/891.14.1/sphal_libraries.txt)",
+}
+
+android_app_import {
+    name: "AdrenoA840_891_14_1",
+    apk: ":AdrenoA840_891_14_1_apk",
+    presigned: false,
+    certificate: "platform",
+    vendor: true,
+    dex_preopt: {
+        enabled: false,
+    },
+}
+
+java_genrule {
+    name: "AdrenoA840_870_0_apk",
+    tools: [
+        "build-adreno-driver-apk",
+        "aapt2",
+        "zipalign",
+    ],
+    srcs: [
+        "a840/870.0/lib64/*.so",
+        "a840/870.0/sphal_libraries.txt",
+        ":sdk_public_36_android",
+    ],
+    out: ["AdrenoA840_870_0.apk"],
+    cmd: "$(location build-adreno-driver-apk) --aapt2 $(location aapt2) --zipalign $(location zipalign) " +
+        "--android-jar $(location :sdk_public_36_android) --version 870.0 --output $(out) " +
+        "$(locations a840/870.0/lib64/*.so) $(location a840/870.0/sphal_libraries.txt)",
+}
+
+android_app_import {
+    name: "AdrenoA840_870_0",
+    apk: ":AdrenoA840_870_0_apk",
+    presigned: false,
+    certificate: "platform",
+    vendor: true,
+    dex_preopt: {
+        enabled: false,
+    },
+}
+
+java_genrule {
+    name: "AdrenoA840_849_0_apk",
+    tools: [
+        "build-adreno-driver-apk",
+        "aapt2",
+        "zipalign",
+    ],
+    srcs: [
+        "a840/849.0/lib64/*.so",
+        "a840/849.0/sphal_libraries.txt",
+        ":sdk_public_36_android",
+    ],
+    out: ["AdrenoA840_849_0.apk"],
+    cmd: "$(location build-adreno-driver-apk) --aapt2 $(location aapt2) --zipalign $(location zipalign) " +
+        "--android-jar $(location :sdk_public_36_android) --version 849.0 --output $(out) " +
+        "$(locations a840/849.0/lib64/*.so) $(location a840/849.0/sphal_libraries.txt)",
+}
+
+android_app_import {
+    name: "AdrenoA840_849_0",
+    apk: ":AdrenoA840_849_0_apk",
+    presigned: false,
+    certificate: "platform",
+    vendor: true,
+    dex_preopt: {
+        enabled: false,
+    },
+}
